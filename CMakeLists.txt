@@ -18,9 +18,14 @@ endif()
 set(WHIM_DEFAULT_COMPILE_FEATURE "cxx_std_20")
 set(WHIM_EXTERNAL_DEPS_PATH "${PROJECT_SOURCE_DIR}/external")
 
-set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 add_subdirectory(src)
 
-add_subdirectory(test)
+if(${WHIM_BUILD_TEST})
+    include(CTest)
+    # for some reason this should be run from root file
+    enable_testing()
+    add_subdirectory(test)
+endif()
