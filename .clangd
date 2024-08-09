@@ -45,4 +45,4 @@ Hover:
   ShowAKA: Yes
 
 CompileFlags:
-  Add: "-std=gnu++20"
+  Add: "-std=c++23"
