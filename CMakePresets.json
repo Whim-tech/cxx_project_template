@@ -1,0 +1,63 @@
+{
+    "version": 8,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 24,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "config-base",
+            "hidden": true,
+            "displayName": "base Configuration",
+            "description": "Default build using Ninja generator and clang compiler",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
+        },
+        {
+            "name": "debug",
+            "displayName": "Config Debug",
+            "description": "Sets debug build type",
+            "inherits": "config-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Config Release",
+            "description": "Sets release build type",
+            "inherits": "config-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "build-base",
+            "hidden": true
+        },
+        {
+            "name": "debug",
+            "displayName": "Build Debug",
+            "inherits": "build-base",
+            "configurePreset": "debug"
+        },
+        {
+            "name": "release",
+            "displayName": "Build Release",
+            "inherits": "build-base",
+            "configurePreset": "release"
+        }
+    ],
+    "testPresets": []
+}
