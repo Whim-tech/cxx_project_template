@@ -18,7 +18,7 @@ cmake --build --preset debug # or release
 - [x] add more info in README.md (how to run, whats inside and etc)
 - [x] add CMake presets
   - [x] add config preset for clang
-  - [ ] add config preset for msvc
-  - [ ] add config preset for gcc
+  - [x] add config preset for msvc
+  - [x] add config preset for gcc
 - [ ] write make script file 
  

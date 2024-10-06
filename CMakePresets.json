@@ -2,62 +2,229 @@
     "version": 5,
     "cmakeMinimumRequired": {
         "major": 3,
-        "minor": 24,
+        "minor": 21,
         "patch": 0
     },
     "configurePresets": [
         {
-            "name": "config-base",
+            "name": "Base-Configuration-Preset",
             "hidden": true,
-            "displayName": "base Configuration",
-            "description": "Default build using Ninja generator and clang compiler",
-            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "architecture": {
                 "value": "x64",
                 "strategy": "external"
             },
             "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
+            }
+        },
+        {
+            "name": "Compiler-GCC",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "Compiler-Clang",
+            "hidden": true,
+            "cacheVariables": {
                 "CMAKE_C_COMPILER": "clang",
                 "CMAKE_CXX_COMPILER": "clang++"
             }
         },
         {
-            "name": "debug",
-            "displayName": "Config Debug",
-            "description": "Sets debug build type",
-            "inherits": "config-base",
+            "name": "Compiler-MSVC",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "Generator-Ninja",
+            "hidden": true,
+            "generator": "Ninja"
+        },
+        {
+            "name": "Generator-VS2022",
+            "hidden": true,
+            "generator": "Visual Studio 17 2022",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "BuildType-Debug",
+            "hidden": true,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
-            "name": "release",
-            "displayName": "Config Release",
-            "description": "Sets release build type",
-            "inherits": "config-base",
+            "name": "BuildType-Release",
+            "hidden": true,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
-        }
-    ],
-    "buildPresets": [
-        {
-            "name": "build-base",
-            "hidden": true
         },
         {
-            "name": "debug",
-            "displayName": "Build Debug",
-            "inherits": "build-base",
-            "configurePreset": "debug"
+            "name": "Debug-Clang-Ninja",
+            "hidden": false,
+            "description": "Debug configuration with Clang compiler and Ninja generator",
+            "displayName": "Debug Clang Ninja",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Debug",
+                "Compiler-Clang",
+                "Generator-Ninja"
+            ]
         },
         {
-            "name": "release",
-            "displayName": "Build Release",
-            "inherits": "build-base",
-            "configurePreset": "release"
+            "name": "Debug-MSVC-Ninja",
+            "hidden": false,
+            "description": "Debug configuration with MSVC compiler and Ninja generator",
+            "displayName": "Debug MSVC Ninja",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Debug",
+                "Compiler-MSVC",
+                "Generator-Ninja"
+            ]
+        },
+        {
+            "name": "Debug-GCC-Ninja",
+            "hidden": false,
+            "description": "Debug configuration with GCC compiler and Ninja generator",
+            "displayName": "Debug GCC Ninja",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Debug",
+                "Compiler-GCC",
+                "Generator-Ninja"
+            ]
+        },
+        {
+            "name": "Debug-Clang-VS2022",
+            "hidden": false,
+            "description": "Debug configuration with Clang compiler and VS2022 generator",
+            "displayName": "Debug Clang VS2022",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Debug",
+                "Compiler-Clang",
+                "Generator-VS2022"
+            ]
+        },
+        {
+            "name": "Debug-MSVC-VS2022",
+            "hidden": false,
+            "description": "Debug configuration with MSVC compiler and VS2022 generator",
+            "displayName": "Debug MSVC VS2022",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Debug",
+                "Compiler-MSVC",
+                "Generator-VS2022"
+            ]
+        },
+        {
+            "name": "Debug-GCC-VS2022",
+            "hidden": false,
+            "description": "Debug configuration with GCC compiler and VS2022 generator",
+            "displayName": "Debug GCC VS2022",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Debug",
+                "Compiler-GCC",
+                "Generator-VS2022"
+            ]
+        },
+        {
+            "name": "Release-Clang-Ninja",
+            "hidden": false,
+            "description": "Release configuration with Clang compiler and Ninja generator",
+            "displayName": "Release Clang Ninja",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Release",
+                "Compiler-Clang",
+                "Generator-Ninja"
+            ]
+        },
+        {
+            "name": "Release-MSVC-Ninja",
+            "hidden": false,
+            "description": "Release configuration with MSVC compiler and Ninja generator",
+            "displayName": "Release MSVC Ninja",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Release",
+                "Compiler-MSVC",
+                "Generator-Ninja"
+            ]
+        },
+        {
+            "name": "Release-GCC-Ninja",
+            "hidden": false,
+            "description": "Release configuration with GCC compiler and Ninja generator",
+            "displayName": "Release GCC Ninja",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Release",
+                "Compiler-GCC",
+                "Generator-Ninja"
+            ]
+        },
+        {
+            "name": "Release-Clang-VS2022",
+            "hidden": false,
+            "description": "Release configuration with Clang compiler and VS2022 generator",
+            "displayName": "Release Clang VS2022",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Release",
+                "Compiler-Clang",
+                "Generator-VS2022"
+            ]
+        },
+        {
+            "name": "Release-MSVC-VS2022",
+            "hidden": false,
+            "description": "Release configuration with MSVC compiler and VS2022 generator",
+            "displayName": "Release MSVC VS2022",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Release",
+                "Compiler-MSVC",
+                "Generator-VS2022"
+            ]
+        },
+        {
+            "name": "Release-GCC-VS2022",
+            "hidden": false,
+            "description": "Release configuration with GCC compiler and VS2022 generator",
+            "displayName": "Release GCC VS2022",
+            "inherits": [
+                "Base-Configuration-Preset",
+                "BuildType-Release",
+                "Compiler-GCC",
+                "Generator-VS2022"
+            ]
         }
     ],
-    "testPresets": []
+    "buildPresets": []
 }
